@@ -121,7 +121,7 @@ public class SimpleClient {
                 iterables.forEach(new Block<Document>() {
                     @Override
                     public void apply(final Document document) {
-                        final ArrayList<String> followers = (ArrayList<String>) document.get("follows");
+                        final ArrayList<String> followers = (ArrayList<String>) document.get("followers");
                         if(followers != null)
                             for(String follower: followers){
                                 db.getCollection("users").updateOne(new Document("username", follower),
@@ -157,7 +157,7 @@ public class SimpleClient {
             }
         } else if (split[0].equals("showtimeline")) {
             if (user != null) {
-                FindIterable<Document> iterable = db.getCollection("users").find();
+                FindIterable<Document> iterable = db.getCollection("users").find(eq("username", user));
                 iterable.forEach(new Block<Document>() {
                     @Override
                     public void apply(final Document document) {
